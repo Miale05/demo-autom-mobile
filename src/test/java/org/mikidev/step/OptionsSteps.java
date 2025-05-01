@@ -80,7 +80,7 @@ public class OptionsSteps {
     @When("el usuario ingresa a la opcion generales")
     public void elUsuarioIngresaALaOpcionGenerales() {
         waitForSeconds(3);
-        takeScreenshot("general_button_clicked");
+        takeScreenshot("ios_general_button_clicked");
         optionsView.clicGeneralButton();
     }
 
@@ -89,7 +89,7 @@ public class OptionsSteps {
         assertTrue(driver.getPageSource().contains("About"));
         assertEquals("Información", optionsView.getAboutText());
         waitForSeconds(3);
-        takeScreenshot("about_text_visible");
+        takeScreenshot("ios_about_text_visible");
         driver.quit();
     }
 }
