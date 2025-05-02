@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class OptionsView {
+public class IOSOptionsView {
     private AppiumDriver driver;
 
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"com.apple.settings.general\"]")
@@ -20,7 +20,7 @@ public class OptionsView {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"About\"]")
     private WebElement informacionLabel;
 
-    public OptionsView(AppiumDriver driver) {
+    public IOSOptionsView(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
     }

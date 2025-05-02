@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class SettingsView {
+public class AndroidSettingsView {
     private AppiumDriver driver;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"android:id/title\" and @text=\"Network & internet\"]")
@@ -20,7 +20,7 @@ public class SettingsView {
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"android:id/title\" and @text=\"Internet\"]")
     private WebElement internetButton;
 
-    public SettingsView(AppiumDriver driver) {
+    public AndroidSettingsView(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
     }

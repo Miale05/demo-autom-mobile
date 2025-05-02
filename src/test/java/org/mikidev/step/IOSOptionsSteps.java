@@ -5,8 +5,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
-import org.mikidev.view.OptionsView;
-import org.mikidev.view.SettingsView;
+import org.mikidev.view.IOSOptionsView;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -21,9 +20,9 @@ import java.nio.file.Paths;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class SettingsSteps {
+public class IOSOptionsSteps {
     private AppiumDriver driver;
-    private SettingsView settingsView;
+    private IOSOptionsView iosOptionsView;
     
     private void takeScreenshot(String fileName) {
         try {
@@ -60,34 +59,37 @@ public class SettingsSteps {
         }
     }
 
-    @Given("el usuario esta en la aplicacion movil android")
-    public void elUsuarioEstaEnLaAplicacionMovilAndroid() throws MalformedURLException {
+    @Given("el usuario esta en la aplicacion movil ios")
+    public void elUsuarioEstaEnLaAplicacionMovilIos() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Medium_Phone_API_35");
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
-        capabilities.setCapability("appium:appPackage", "com.android.settings");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "18.4");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 16 Pro Simulator");
+        capabilities.setCapability(MobileCapabilityType.UDID, "1F96E1FA-BF43-4387-B1B6-FA9F9733ED3A");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+        capabilities.setCapability("appium:bundleId", "com.apple.Preferences");
 
         URL appiumServerUrl = new URL("http://127.0.0.1:4723/");
         driver = new AppiumDriver(appiumServerUrl, capabilities);
         
-        settingsView = new SettingsView(driver);
+        iosOptionsView = new IOSOptionsView(driver);
 
         clearScreenshots();
     }
 
-    @When("el usuario ingresa a la opcion conexion")
-    public void elUsuarioIngresaALaOpcionConexion() {
+    @When("el usuario ingresa a la opcion generales")
+    public void elUsuarioIngresaALaOpcionGenerales() {
         waitForSeconds(3);
-        takeScreenshot("android_settings_view");
-        settingsView.clicNetworkButton();
+        takeScreenshot("ios_general_button_clicked");
+        iosOptionsView.clicGeneralButton();
     }
 
-    @Then("el usuario deberia ver la opcion internet")
-    public void elUsuarioDeberiaVerLaOpcionInternet() {
-        assertEquals("Internet", settingsView.getInternetText());
+    @Then("el usuario deberia ver otras opciones")
+    public void elUsuarioDeberiaVerOtrasOpciones() {
+        assertTrue(driver.getPageSource().contains("About"));
+        assertEquals("Información", iosOptionsView.getAboutText());
         waitForSeconds(3);
-        takeScreenshot("android_internet_view");
+        takeScreenshot("ios_about_text_visible");
         driver.quit();
     }
 }
